@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  jenkins-blueocean:
+    container_name: jenkins-blueocean  # Specifies the Docker container name
+    image: docker:v1  # The name of the Docker image
+    restart: on-failure  # Always restart the container if it stops
+    detach: true  # Runs the container in detached mode
+    networks:
+      - jenkins  # Connects the container to the 'jenkins' network
+    environment:  # Specifies environment variables
+      DOCKER_HOST: tcp://docker:2376
+      DOCKER_CERT_PATH: /certs/client
+      DOCKER_TLS_VERIFY: "1"
+    ports:
+      - "8080:8080"  # Maps port 8080 of the container to port 8080 on the host
+      - "50000:50000"  # Maps port 50000 of the container to port 50000 on the host
+    volumes:
+      - jenkins-data:/var/jenkins_home  # Maps /var/jenkins_home in the container to a Docker volume
+      - jenkins-docker-certs:/certs/client:ro  # Maps /certs/client to a Docker volume with read-only access
+
+networks:
+  jenkins:  # Defines the 'jenkins' network
+
+volumes:
+  jenkins-data:  # Defines the 'jenkins-data' volume
+  jenkins-docker-certs:  # Defines the 'jenkins-docker-certs' volume

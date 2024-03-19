@@ -5,7 +5,6 @@ services:
     container_name: jenkins-blueocean  # Specifies the Docker container name
     image: docker:v1  # The name of the Docker image
     restart: on-failure  # Always restart the container if it stops
-    detach: true  # Runs the container in detached mode
     networks:
       - jenkins  # Connects the container to the 'jenkins' network
     environment:  # Specifies environment variables
